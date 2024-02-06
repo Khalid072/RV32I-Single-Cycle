@@ -1,0 +1,42 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 01/19/2024 12:05:54 AM
+// Design Name: 
+// Module Name: branchcomp
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module branchcomp(
+input logic [31:0] BA,
+input logic [31:0] BB,
+input logic [2:0] func31,
+output logic bout
+    );
+    
+    always_comb begin
+    
+    case(func31)
+    3'b000: bout= (BA == BB)? 1'b1 : 1'b0;//beq
+    3'b001: bout= (BA != BB)? 1'b1 : 1'b0;//bne
+    3'b100: bout= ($signed(BA) < $signed(BB)) ? 1'b1 : 1'b0;//blt
+    3'b101: bout= ($signed(BA) >= $signed(BB)) ? 1'b1 : 1'b0;//bge
+    3'b110: bout= ($unsigned(BA) < $unsigned(BB)) ? 1'b1 : 1'b0;//bltu
+    3'b111: bout= ($unsigned(BA) >= $unsigned(BB)) ? 1'b1 : 1'b0;//bgeu
+    default:;
+    endcase
+    end
+endmodule
